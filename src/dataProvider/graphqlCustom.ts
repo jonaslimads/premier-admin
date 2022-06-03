@@ -1,7 +1,7 @@
 import { ApolloQueryResult } from '@apollo/client';
 import buildApolloClient, {
     buildQuery as buildQueryFactory,
-} from 'ra-data-graphql-simple';
+} from './graphql-custom';
 import { BuildQueryFactory } from 'ra-data-graphql';
 import { CREATE, DataProvider, DELETE, GET_LIST } from 'react-admin';
 import gql from 'graphql-tag';

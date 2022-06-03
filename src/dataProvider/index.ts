@@ -34,7 +34,8 @@ const getDataProvider = async (type: string): Promise<DataProvider> => {
      * use the import() function, so they are asynchronous.
      */
     if (type === 'graphql') {
-        return import('./graphql').then(factory => factory.default());
+        // return import('./graphqlCustom').then(factory => factory.default());
+        return import('./graphqlCustom').then(factory => factory.default());
     }
     return import('./rest').then(provider => provider.default);
 };
