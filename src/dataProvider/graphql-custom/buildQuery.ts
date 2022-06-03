@@ -7,20 +7,22 @@ export const buildQueryFactory = (
     buildVariablesImpl = buildVariables,
     buildGqlQueryImpl = buildGqlQuery,
     getResponseParserImpl = getResponseParser
-) => (introspectionResults: IntrospectionResult): BuildQuery => {
-    const knownResources = introspectionResults.resources.map(r => r.type.name);
-
+) => (): BuildQuery => {
+    // const knownResources = introspectionResults.resources.map(r => r.type.name);
     const buildQuery: BuildQuery = (raFetchType, resourceName, params) => {
-        const resource: any = introspectionResults.resources.find(
-            r => r.type.name === resourceName
-        );
+        // const resource: any = introspectionResults.resources.find(
+        //     r => r.type.name === resourceName
+        // );
+        console.log("Hello")
+        const resource: any = undefined;
 
         if (!resource) {
-            throw new Error(
-                `Unknown resource ${resourceName}. Make sure it has been declared on your server side schema. Known resources are ${knownResources.join(
-                    ', '
-                )}`
-            );
+            throw new Error("No resource");
+            // throw new Error(
+            //     `Unknown resource ${resourceName}. Make sure it has been declared on your server side schema. Known resources are ${knownResources.join(
+            //         ', '
+            //     )}`
+            // );
         }
 
         const queryType = resource[raFetchType];
@@ -31,19 +33,19 @@ export const buildQueryFactory = (
             );
         }
 
-        const variables = buildVariablesImpl(introspectionResults)(
+        const variables = buildVariablesImpl()(
             resource,
             raFetchType,
             params,
             queryType
         );
-        const query = buildGqlQueryImpl(introspectionResults)(
+        const query = buildGqlQueryImpl()(
             resource,
             raFetchType,
             queryType,
             variables
         );
-        const parseResponse = getResponseParserImpl(introspectionResults)(
+        const parseResponse = getResponseParserImpl()(
             raFetchType,
             resource,
             queryType

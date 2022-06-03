@@ -3,7 +3,7 @@ import { IntrospectionResult, IntrospectedResource } from 'ra-data-graphql';
 import { IntrospectionField } from 'graphql';
 import { ApolloQueryResult } from '@apollo/client';
 
-export default (introspectionResults: IntrospectionResult) => (
+export default () => (
     raFetchMethod: string,
     resource: IntrospectedResource,
     queryType: IntrospectionField
@@ -16,8 +16,9 @@ export default (introspectionResults: IntrospectionResult) => (
         raFetchMethod === GET_MANY_REFERENCE
     ) {
         return {
-            data: response.data.items.map(sanitizeResource),
-            total: response.data.total.count,
+            data: {}
+            // data: response.data.items.map(sanitizeResource),
+            // total: response.data.total.count,
         };
     }
 

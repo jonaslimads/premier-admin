@@ -21,7 +21,7 @@ import getFinalType from './getFinalType';
 import isList from './isList';
 import isRequired from './isRequired';
 
-export default (introspectionResults: IntrospectionResult) => (
+export default () => (
     resource: IntrospectedResource,
     raFetchMethod: string,
     queryType: IntrospectionField,
@@ -31,75 +31,77 @@ export default (introspectionResults: IntrospectionResult) => (
     const apolloArgs = buildApolloArgs(queryType, variables);
     const args = buildArgs(queryType, variables);
     const metaArgs = buildArgs(queryType, metaVariables);
-    const fields = buildFields(introspectionResults)(resource.type.fields);
+    // const fields = buildFields(introspectionResults)(resource.type.fields);
 
-    if (
-        raFetchMethod === GET_LIST ||
-        raFetchMethod === GET_MANY ||
-        raFetchMethod === GET_MANY_REFERENCE
-    ) {
-        return gqlTypes.document([
-            gqlTypes.operationDefinition(
-                'query',
-                gqlTypes.selectionSet([
-                    gqlTypes.field(
-                        gqlTypes.name(queryType.name),
-                        gqlTypes.name('items'),
-                        args,
-                        null,
-                        gqlTypes.selectionSet(fields)
-                    ),
-                    gqlTypes.field(
-                        gqlTypes.name(`_${queryType.name}Meta`),
-                        gqlTypes.name('total'),
-                        metaArgs,
-                        null,
-                        gqlTypes.selectionSet([
-                            gqlTypes.field(gqlTypes.name('count')),
-                        ])
-                    ),
-                ]),
-                gqlTypes.name(queryType.name),
-                apolloArgs
-            ),
-        ]);
-    }
+    return gqlTypes.document([]);
 
-    if (raFetchMethod === DELETE) {
-        return gqlTypes.document([
-            gqlTypes.operationDefinition(
-                'mutation',
-                gqlTypes.selectionSet([
-                    gqlTypes.field(
-                        gqlTypes.name(queryType.name),
-                        gqlTypes.name('data'),
-                        args,
-                        null,
-                        gqlTypes.selectionSet(fields)
-                    ),
-                ]),
-                gqlTypes.name(queryType.name),
-                apolloArgs
-            ),
-        ]);
-    }
+    // if (
+    //     raFetchMethod === GET_LIST ||
+    //     raFetchMethod === GET_MANY ||
+    //     raFetchMethod === GET_MANY_REFERENCE
+    // ) {
+    //     return gqlTypes.document([
+    //         gqlTypes.operationDefinition(
+    //             'query',
+    //             gqlTypes.selectionSet([
+    //                 // gqlTypes.field(
+    //                 //     gqlTypes.name(queryType.name),
+    //                 //     gqlTypes.name('items'),
+    //                 //     args,
+    //                 //     null,
+    //                 //     gqlTypes.selectionSet(fields)
+    //                 // ),
+    //                 // gqlTypes.field(
+    //                 //     gqlTypes.name(`_${queryType.name}Meta`),
+    //                 //     gqlTypes.name('total'),
+    //                 //     metaArgs,
+    //                 //     null,
+    //                 //     gqlTypes.selectionSet([
+    //                 //         gqlTypes.field(gqlTypes.name('count')),
+    //                 //     ])
+    //                 // ),
+    //             ]),
+    //             gqlTypes.name(queryType.name),
+    //             apolloArgs
+    //         ),
+    //     ]);
+    // }
 
-    return gqlTypes.document([
-        gqlTypes.operationDefinition(
-            QUERY_TYPES.includes(raFetchMethod) ? 'query' : 'mutation',
-            gqlTypes.selectionSet([
-                gqlTypes.field(
-                    gqlTypes.name(queryType.name),
-                    gqlTypes.name('data'),
-                    args,
-                    null,
-                    gqlTypes.selectionSet(fields)
-                ),
-            ]),
-            gqlTypes.name(queryType.name),
-            apolloArgs
-        ),
-    ]);
+    // if (raFetchMethod === DELETE) {
+    //     return gqlTypes.document([
+    //         gqlTypes.operationDefinition(
+    //             'mutation',
+    //             gqlTypes.selectionSet([
+    //                 gqlTypes.field(
+    //                     gqlTypes.name(queryType.name),
+    //                     gqlTypes.name('data'),
+    //                     args,
+    //                     null,
+    //                     gqlTypes.selectionSet(fields)
+    //                 ),
+    //             ]),
+    //             gqlTypes.name(queryType.name),
+    //             apolloArgs
+    //         ),
+    //     ]);
+    // }
+
+    // return gqlTypes.document([
+    //     gqlTypes.operationDefinition(
+    //         QUERY_TYPES.includes(raFetchMethod) ? 'query' : 'mutation',
+    //         gqlTypes.selectionSet([
+    //             gqlTypes.field(
+    //                 gqlTypes.name(queryType.name),
+    //                 gqlTypes.name('data'),
+    //                 args,
+    //                 null,
+    //                 gqlTypes.selectionSet(fields)
+    //             ),
+    //         ]),
+    //         gqlTypes.name(queryType.name),
+    //         apolloArgs
+    //     ),
+    // ]);
 };
 
 export const buildFields = (

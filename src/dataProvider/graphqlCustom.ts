@@ -6,51 +6,56 @@ import { BuildQueryFactory } from 'ra-data-graphql';
 import { CREATE, DataProvider, DELETE, GET_LIST } from 'react-admin';
 import gql from 'graphql-tag';
 import { IntrospectionType } from 'graphql';
+import { HttpLink, DefaultOptions } from '@apollo/client';
+
 
 const getGqlResource = (resource: string) => {
     switch (resource) {
-        case 'customers':
-            return 'Customer';
+        // case 'customers':
+        //     return 'Customer';
 
         case 'categories':
             return 'Category';
 
-        case 'commands':
-            return 'Command';
+        // case 'commands':
+        //     return 'Command';
 
-        case 'products':
-            return 'Product';
+        // case 'products':
+        //     return 'Product';
 
-        case 'reviews':
-            return 'Review';
+        // case 'reviews':
+        //     return 'Review';
 
-        case 'invoices':
-            return 'Invoice';
+        // case 'invoices':
+        //     return 'Invoice';
 
         default:
             throw new Error(`Unknown resource ${resource}`);
     }
 };
 
-const customBuildQuery: BuildQueryFactory = introspectionResults => {
-    const buildQuery = buildQueryFactory(introspectionResults);
-
+const customBuildQuery: BuildQueryFactory = () => {
+    const buildQuery = buildQueryFactory();
     return (type, resource, params) => {
         console.log(type, resource, params);
-        // if (type === GET_LIST) {
-        //     return {
-        //         query: gql`query allCategory {
-        //             numbers(first: 2) {
-        //                 edges {
-        //                     node
-        //                     diff
-        //                 }
-        //             }
-        //         }`,
-        //         variables: { id: params.id },
-        //         parseResponse: ({ data }: ApolloQueryResult<any>) => { }
-        //     }
-        // }
+        if (type === GET_LIST) {
+            return {
+                query: gql`query allCategories($first: Int) {
+                    numbers(first: $first) {
+                        edges {
+                            node
+                            diff
+                        }
+                    }
+                }`,
+                // variables: { id: params.id },
+                variables: { first: 2 },
+                parseResponse: ({ data }: ApolloQueryResult<any>) => {
+                    console.log("Got data", data);
+                    return { data: [], total: 0 };
+                }
+            }
+        }
         if (type === DELETE) {
             return {
                 query: gql`mutation remove${resource}($id: ID!) {
@@ -128,16 +133,38 @@ const customBuildQuery: BuildQueryFactory = introspectionResults => {
 };
 
 export default async () => {
+    const defaultOptions: DefaultOptions = {
+        watchQuery: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'ignore',
+        },
+        query: {
+            fetchPolicy: 'no-cache',
+            errorPolicy: 'all',
+        },
+    }
+
     const dataProvider = await buildApolloClient({
         clientOptions: {
-            uri: 'http://localhost:4000/graphql',
+            link: new HttpLink({
+                uri: 'http://localhost:8000',
+                fetchOptions: {
+                    mode: 'no-cors'
+                },
+                headers: {
+                    // 'Access-Control-Request-Method': 'POST',
+                }
+            }),
+            defaultOptions: defaultOptions,
+            connectToDevTools: true
         },
-        introspection: {
-            operationNames: {
-                [DELETE]: (resource: IntrospectionType) =>
-                    `remove${resource.name}`,
-            },
-        },
+        introspection: false,
+        // introspection: {
+        //     operationNames: {
+        //         [DELETE]: (resource: IntrospectionType) =>
+        //             `remove${resource.name}`,
+        //     },
+        // },
         buildQuery: customBuildQuery,
     });
 
@@ -147,7 +174,10 @@ export default async () => {
                 return;
             }
             return async (resource: string, params: any) => {
-                return dataProvider[name](getGqlResource(resource), params);
+                console.log(name, resource, params);
+                // console.trace();
+                // return { data: [], total: 0 };
+                return dataProvider[name](getGqlResource(resource), {});
             };
         },
     });

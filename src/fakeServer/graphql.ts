@@ -24,6 +24,6 @@ export default () => {
             return res;
         });
 
-    fetchMock.mock('begin:http://localhost:4000', handlerWithLogs);
+    fetchMock.mock('begin:http://localhost:8000', handlerWithLogs);
     return () => fetchMock.restore();
 };

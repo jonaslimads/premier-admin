@@ -14,6 +14,9 @@ export default (
 ): Promise<DataProvider> => {
     return buildDataProvider(merge({}, defaultOptions, options)).then(
         defaultDataProvider => {
+            // console.trace();
+            // console.log(options)
+            // console.log(defaultOptions);
             return {
                 ...defaultDataProvider,
                 // This provider does not support multiple deletions so instead we send multiple DELETE requests
