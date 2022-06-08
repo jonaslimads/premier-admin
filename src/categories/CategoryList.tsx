@@ -35,14 +35,10 @@ const CategoryGrid = () => {
             {data.map(record => (
                 <Grid key={record.id} xs={12} sm={6} md={4} lg={3} xl={2} item>
                     <Card>
-                        <CardMedia
-                            image={`https://marmelab.com/posters/${record.name}-1.jpeg`}
-                            sx={{ height: 140 }}
-                        />
                         <CardContent sx={{ paddingBottom: '0.5em' }}>
                             <Typography
-                                variant="h5"
-                                component="h2"
+                                variant="h6"
+                                component="h3"
                                 align="center"
                             >
                                 {inflection.humanize(record.name)}

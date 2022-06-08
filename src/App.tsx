@@ -31,7 +31,7 @@ const i18nProvider = polyglotI18nProvider(locale => {
 const App = () => {
     return (
         <Admin
-            title=""
+            title="Premier Admin"
             dataProvider={dataProviderFactory(
                 process.env.REACT_APP_DATA_PROVIDER || ''
             )}

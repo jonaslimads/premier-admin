@@ -12,7 +12,7 @@ const ProductRefField = () => {
             to={`/products/${record.id}`}
             underline="none"
         >
-            {record.reference}
+            {record.name}
         </MuiLink>
     ) : null;
 };

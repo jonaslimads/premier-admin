@@ -36,21 +36,7 @@ const customBuildQuery: BuildQueryFactory = introspectionResults => {
     const buildQuery = buildQueryFactory(introspectionResults);
 
     return (type, resource, params) => {
-        console.log(type, resource, params);
-        // if (type === GET_LIST) {
-        //     return {
-        //         query: gql`query allCategory {
-        //             numbers(first: 2) {
-        //                 edges {
-        //                     node
-        //                     diff
-        //                 }
-        //             }
-        //         }`,
-        //         variables: { id: params.id },
-        //         parseResponse: ({ data }: ApolloQueryResult<any>) => { }
-        //     }
-        // }
+        // console.log(type, resource, params);
         if (type === DELETE) {
             return {
                 query: gql`mutation remove${resource}($id: ID!) {

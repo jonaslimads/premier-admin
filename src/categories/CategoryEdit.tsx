@@ -8,6 +8,7 @@ import {
     ReferenceManyField,
     SimpleForm,
     TextInput,
+    TextField,
     useTranslate,
     useRecordContext,
 } from 'react-admin';
@@ -35,12 +36,13 @@ const CategoryEdit = () => (
                         }}
                     >
                         <ThumbnailField source="thumbnail" label="" />
-                        <ProductRefField source="reference" />
+                        <ProductRefField source="name" />
+                        <TextField source="slug" label="Slug" />
                         <NumberField
                             source="price"
                             options={{ style: 'currency', currency: 'USD' }}
                         />
-                        <NumberField
+                        {/* <NumberField
                             source="width"
                             options={{ minimumFractionDigits: 2 }}
                         />
@@ -49,7 +51,7 @@ const CategoryEdit = () => (
                             options={{ minimumFractionDigits: 2 }}
                         />
                         <NumberField source="stock" />
-                        <NumberField source="sales" />
+                        <NumberField source="sales" /> */}
                         <EditButton />
                     </Datagrid>
                 </ReferenceManyField>

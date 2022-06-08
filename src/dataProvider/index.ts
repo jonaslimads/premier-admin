@@ -25,19 +25,26 @@ export default (type: string) => {
     return dataProviderWithGeneratedData;
 };
 
+const useFake = false;
+
 const getDataProvider = async (type: string): Promise<DataProvider> => {
-    // await fakeServerFactory(process.env.REACT_APP_DATA_PROVIDER || '');
-    /**
-     * This demo can work with either a fake REST server, or a fake GraphQL server.
-     *
-     * To avoid bundling both libraries, the dataProvider and fake server factories
-     * use the import() function, so they are asynchronous.
-     */
-    if (type === 'graphql') {
-        // return import('./graphqlCustom').then(factory => factory.default());
-        return import('./graphqlPremier').then(factory => factory.default());
+    if (useFake) {
+        await fakeServerFactory(process.env.REACT_APP_DATA_PROVIDER || '');
+        return import('./graphql').then(factory => factory.default());
     }
-    return import('./rest').then(provider => provider.default);
+    return import('./graphqlPremier').then(factory => factory.default());
+    // await fakeServerFactory(process.env.REACT_APP_DATA_PROVIDER || '');
+    // /**
+    //  * This demo can work with either a fake REST server, or a fake GraphQL server.
+    //  *
+    //  * To avoid bundling both libraries, the dataProvider and fake server factories
+    //  * use the import() function, so they are asynchronous.
+    //  */
+    // if (type === 'graphql') {
+    //     return import('./graphql').then(factory => factory.default());
+    //     // return import('./graphqlPremier').then(factory => factory.default());
+    // }
+    // return import('./rest').then(provider => provider.default);
 };
 
 const defaultDataProvider: DataProvider = {
