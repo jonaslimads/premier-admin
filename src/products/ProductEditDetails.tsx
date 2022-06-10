@@ -7,18 +7,19 @@ import {
     TextInput,
 } from 'react-admin';
 import { InputAdornment, Grid } from '@mui/material';
+import { CATEGORY_ID } from '../dataProvider';
 
 export const ProductEditDetails = () => (
     <Grid container columnSpacing={2}>
         <Grid item xs={12} sm={8}>
-            <TextInput source="reference" fullWidth validate={req} />
+            <TextInput source="name" fullWidth validate={req} />
         </Grid>
         <Grid item xs={12} sm={4}>
-            <ReferenceInput source="category_id" reference="categories">
+            <ReferenceInput source={CATEGORY_ID} reference="categories">
                 <SelectInput source="name" validate={req} fullWidth />
             </ReferenceInput>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
             <NumberInput
                 source="width"
                 InputProps={{
@@ -41,7 +42,7 @@ export const ProductEditDetails = () => (
                 validate={req}
                 fullWidth
             />
-        </Grid>
+        </Grid> */}
         <Grid item xs={0} sm={4}></Grid>
         <Grid item xs={12} sm={4}>
             <NumberInput
@@ -55,12 +56,12 @@ export const ProductEditDetails = () => (
                 fullWidth
             />
         </Grid>
-        <Grid item xs={12} sm={4}>
+        {/* <Grid item xs={12} sm={4}>
             <NumberInput source="stock" validate={req} fullWidth />
         </Grid>
         <Grid item xs={12} sm={4}>
             <NumberInput source="sales" validate={req} fullWidth />
-        </Grid>
+        </Grid> */}
     </Grid>
 );
 

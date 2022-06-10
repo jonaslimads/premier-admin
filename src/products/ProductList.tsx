@@ -20,6 +20,7 @@ import {
     useGetResourceLabel,
 } from 'react-admin';
 
+import { CATEGORY_ID } from '../dataProvider';
 import ImageList from './GridList';
 import Aside from './Aside';
 
@@ -56,7 +57,7 @@ const QuickFilter = ({ label }: InputProps) => {
 export const productFilters = [
     <SearchInput source="q" alwaysOn />,
     <ReferenceInput
-        source="category_id"
+        source={CATEGORY_ID}
         reference="categories"
         sort={{ field: 'id', order: 'ASC' }}
     >

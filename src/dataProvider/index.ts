@@ -1,6 +1,19 @@
 import { DataProvider } from 'react-admin';
 import fakeServerFactory from '../fakeServer';
 
+export const USE_FAKE = false;
+
+export const onRealData = (realData: string, fakeData: string): string => {
+    if (USE_FAKE) {
+        return fakeData;
+    }
+    return realData;
+}
+
+export const PRODUCT_ID: string = onRealData('productId', 'product_id');
+
+export const CATEGORY_ID: string = onRealData("categoryId", "category_id")
+
 export default (type: string) => {
     // The fake servers require to generate data, which can take some time.
     // Here we start the server initialization but we don't wait for it to finish
@@ -25,26 +38,13 @@ export default (type: string) => {
     return dataProviderWithGeneratedData;
 };
 
-const useFake = false;
 
 const getDataProvider = async (type: string): Promise<DataProvider> => {
-    if (useFake) {
+    if (USE_FAKE) {
         await fakeServerFactory(process.env.REACT_APP_DATA_PROVIDER || '');
         return import('./graphql').then(factory => factory.default());
     }
     return import('./graphqlPremier').then(factory => factory.default());
-    // await fakeServerFactory(process.env.REACT_APP_DATA_PROVIDER || '');
-    // /**
-    //  * This demo can work with either a fake REST server, or a fake GraphQL server.
-    //  *
-    //  * To avoid bundling both libraries, the dataProvider and fake server factories
-    //  * use the import() function, so they are asynchronous.
-    //  */
-    // if (type === 'graphql') {
-    //     return import('./graphql').then(factory => factory.default());
-    //     // return import('./graphqlPremier').then(factory => factory.default());
-    // }
-    // return import('./rest').then(provider => provider.default);
 };
 
 const defaultDataProvider: DataProvider = {

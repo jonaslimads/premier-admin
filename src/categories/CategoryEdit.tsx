@@ -16,6 +16,7 @@ import {
 import ThumbnailField from '../products/ThumbnailField';
 import ProductRefField from '../products/ProductRefField';
 import { Category } from '../types';
+import { CATEGORY_ID } from '../dataProvider';
 
 const CategoryEdit = () => (
     <Edit title={<CategoryTitle />}>
@@ -24,7 +25,7 @@ const CategoryEdit = () => (
             <Labeled label="resources.categories.fields.products" fullWidth>
                 <ReferenceManyField
                     reference="products"
-                    target="category_id"
+                    target={CATEGORY_ID}
                     perPage={20}
                 >
                     <Datagrid

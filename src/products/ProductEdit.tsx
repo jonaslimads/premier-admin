@@ -22,6 +22,7 @@ import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import StarRatingField from '../reviews/StarRatingField';
 import Poster from './Poster';
 import { Product } from '../types';
+import { PRODUCT_ID } from '../dataProvider';
 
 const ProductTitle = () => {
     const record = useRecordContext<Product>();
@@ -31,17 +32,17 @@ const ProductTitle = () => {
 const ProductEdit = () => (
     <Edit title={<ProductTitle />}>
         <TabbedForm>
-            <FormTab
+            {/* <FormTab
                 label="resources.products.tabs.image"
                 sx={{ maxWidth: '40em' }}
             >
                 <Poster />
                 <TextInput source="image" fullWidth validate={req} />
                 <TextInput source="thumbnail" fullWidth validate={req} />
-            </FormTab>
+            </FormTab> */}
             <FormTab
                 label="resources.products.tabs.details"
-                path="details"
+                // path="details"
                 sx={{ maxWidth: '40em' }}
             >
                 <ProductEditDetails />
@@ -56,7 +57,7 @@ const ProductEdit = () => (
             <ReviewsFormTab path="reviews">
                 <ReferenceManyField
                     reference="reviews"
-                    target="product_id"
+                    target={PRODUCT_ID}
                     pagination={<Pagination />}
                 >
                     <Datagrid
@@ -90,7 +91,7 @@ const ReviewsFormTab = (props: any) => {
     const { isLoading, total } = useGetManyReference(
         'reviews',
         {
-            target: 'product_id',
+            target: PRODUCT_ID,
             id: record.id,
             pagination: { page: 1, perPage: 25 },
             sort: { field: 'id', order: 'DESC' },
