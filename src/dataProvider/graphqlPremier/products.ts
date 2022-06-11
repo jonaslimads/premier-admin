@@ -11,6 +11,7 @@ export class ProductsGraphQl extends GraphQlResource {
     }
 
     public getList(params: any): Promise<any> {
+        console.warn(params);
         return this.runQuery(
             gql`
                 query GetListProducts($filter: JSONObject, $sort: [OrderBy], $after: String, $before: String, $first: Int, $last: Int) {
@@ -22,6 +23,8 @@ export class ProductsGraphQl extends GraphQlResource {
                                 slug
                                 currency
                                 price
+                                attachments
+                                attributes
                             }
                             categoryId
                         }
@@ -71,12 +74,14 @@ export class ProductsGraphQl extends GraphQlResource {
     public updateOne(params: any): Promise<any> {
         const { data, previousData } = params;
 
+        const id = params.id;
         const variables: string[] = ['$id: String!'];
-        const mutationData: any = { id: params.id };
+        const mutationData: any = { id };
 
         let updateName = '';
         let updateDescription = '';
         let updateSlug = '';
+        let updateCategoryId = '';
 
         if (data.name !== previousData.name) {
             variables.push('$name: String!');
@@ -114,15 +119,35 @@ export class ProductsGraphQl extends GraphQlResource {
                 )
             `;
         }
+        if (data.categoryId !== previousData.categoryId) {
+            if (previousData.categoryId !== '') {
+                variables.push('$categoryId: String!');
+                variables.push('$vendorId: String!');
+                mutationData['categoryId'] = data.categoryId;
+                mutationData['vendorId'] = data.vendor.id;
+                updateCategoryId = `
+                    categorizeProduct(
+                        command: {
+                            id: $id,
+                            vendorId: $vendorId,
+                            categoryId: $categoryId,
+                        }
+                    )
+                `;
+            } else {
+                //  TODO uncategorize
+            }
+        }
 
         const mutation = `
             mutation UpdateProduct(${variables.join(',')}) {
                 ${updateName}
                 ${updateDescription}
                 ${updateSlug}
+                ${updateCategoryId}
             }
         `;
 
-        return this.runQuery(gql`${mutation}`, mutationData, mapMutation);
+        return this.runQuery(gql`${mutation}`, mutationData, mapMutation({ id }));
     }
 }

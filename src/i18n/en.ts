@@ -127,7 +127,7 @@ const customEnglishMessages: TranslationMessages = {
             },
         },
         products: {
-            name: 'Poster |||| Posters',
+            name: 'Product |||| Products',
             fields: {
                 category_id: 'Category',
                 height_gte: 'Min height',
@@ -149,6 +149,7 @@ const customEnglishMessages: TranslationMessages = {
                 details: 'Details',
                 description: 'Description',
                 reviews: 'Reviews',
+                attachments: 'Attachments',
             },
             filters: {
                 categories: 'Categories',

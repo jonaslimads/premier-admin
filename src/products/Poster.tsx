@@ -5,6 +5,7 @@ import { Product } from '../types';
 
 const Poster = () => {
     const record = useRecordContext<Product>();
+    console.log("HI from react", record);
     if (!record) return null;
     return (
         <Card sx={{ display: 'inline-block' }}>

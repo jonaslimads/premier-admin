@@ -6,7 +6,8 @@ import { PRODUCTS } from './products';
 // import { REVIEWS } from './reviews';
 
 export const transformParams = (name: string, params: any): any => {
-    const newParams: { [key: string]: string | number | any } = { filter: {} };
+    const filter = params.filter || {};
+    const newParams: { [key: string]: string | number | any } = { filter: { ...filter } };
 
     // temp
     newParams.filter['vendorId'] = '332807312191';
@@ -78,6 +79,8 @@ export const mapGetOneResult = (resource: string, response: any): GetOneResult<a
     return { data: data };
 }
 
-export const mapMutation = (resource: string, response: any): any => {
-    return { data: response.data }
+export const mapMutation = (data: any): any => {
+    return (_resource: string, _response: any): any => {
+        return { data }
+    }
 }

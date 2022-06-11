@@ -21,6 +21,7 @@ import { ProductEditDetails } from './ProductEditDetails';
 import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import StarRatingField from '../reviews/StarRatingField';
 import Poster from './Poster';
+import AttachmentList from './Attachment';
 import { Product } from '../types';
 import { PRODUCT_ID } from '../dataProvider';
 
@@ -32,20 +33,21 @@ const ProductTitle = () => {
 const ProductEdit = () => (
     <Edit title={<ProductTitle />}>
         <TabbedForm>
-            {/* <FormTab
-                label="resources.products.tabs.image"
-                sx={{ maxWidth: '40em' }}
-            >
-                <Poster />
-                <TextInput source="image" fullWidth validate={req} />
-                <TextInput source="thumbnail" fullWidth validate={req} />
-            </FormTab> */}
             <FormTab
                 label="resources.products.tabs.details"
                 // path="details"
                 sx={{ maxWidth: '40em' }}
             >
                 <ProductEditDetails />
+            </FormTab>
+            <FormTab
+                label="resources.products.tabs.attachments"
+                path="attachments"
+                sx={{ maxWidth: '40em' }}
+            >
+                <AttachmentList />
+                {/* <TextInput source="image" fullWidth validate={req} />
+                <TextInput source="thumbnail" fullWidth validate={req} /> */}
             </FormTab>
             <FormTab
                 label="resources.products.tabs.description"

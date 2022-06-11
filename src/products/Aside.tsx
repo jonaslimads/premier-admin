@@ -10,6 +10,7 @@ import {
     FilterLiveSearch,
     useGetList,
 } from 'react-admin';
+import { CATEGORY_ID } from '../dataProvider';
 
 import { Category } from '../types';
 
@@ -32,7 +33,7 @@ const Aside = () => {
             <CardContent sx={{ pt: 1 }}>
                 <FilterLiveSearch />
 
-                <FilterList
+                {/* <FilterList
                     label="resources.products.filters.sales"
                     icon={<AttachMoneyIcon />}
                 >
@@ -106,7 +107,7 @@ const Aside = () => {
                             stock: undefined,
                         }}
                     />
-                </FilterList>
+                </FilterList> */}
 
                 <FilterList
                     label="resources.products.filters.categories"
@@ -117,7 +118,7 @@ const Aside = () => {
                             <FilterListItem
                                 label={inflection.humanize(record.name)}
                                 key={record.id}
-                                value={{ category_id: record.id }}
+                                value={{ categoryId: record.id }}
                             />
                         ))}
                 </FilterList>

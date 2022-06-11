@@ -1,5 +1,10 @@
 import * as React from 'react';
 import { ReferenceField, ReferenceFieldProps, TextField } from 'react-admin';
+import { onRealData } from '../dataProvider';
+
+
+const PRODUCT_ID = onRealData('id', 'product_id');
+const REFERENCE = onRealData('name', 'reference');
 
 interface Props {
     source?: string;
@@ -11,16 +16,16 @@ const ProductReferenceField = (
 ) => (
     <ReferenceField
         label="Product"
-        source="product_id"
+        source={PRODUCT_ID}
         reference="products"
         {...props}
     >
-        <TextField source="reference" />
+        <TextField source={REFERENCE} />
     </ReferenceField>
 );
 
 ProductReferenceField.defaultProps = {
-    source: 'product_id',
+    source: PRODUCT_ID,
 };
 
 export default ProductReferenceField;

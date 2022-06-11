@@ -9,7 +9,7 @@ const GridList = () => {
     return isLoading ? <LoadingGridList /> : <LoadedGridList />;
 };
 
-const useColsForWidth = () => {
+export const useColsForWidth = () => {
     const theme = useTheme();
     const sm = useMediaQuery(theme.breakpoints.up('sm'));
     const md = useMediaQuery(theme.breakpoints.up('md'));
@@ -45,7 +45,9 @@ const LoadedGridList = () => {
     const cols = useColsForWidth();
     const createPath = useCreatePath();
 
-    if (!data) return null;
+    if (!data) {
+        return null
+    }
 
     return (
         <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
@@ -59,12 +61,13 @@ const LoadedGridList = () => {
                         type: 'edit',
                     })}
                 >
-                    <img src={record.thumbnail} alt="" />
+                    {record.attachments[0] &&
+                        <img src={record.attachments[0]} alt={record.name} />
+                    }
                     <ImageListItemBar
-                        title={record.reference}
+                        title={record.name}
                         subtitle={
                             <span>
-                                {record.width}x{record.height},{' '}
                                 <NumberField
                                     source="price"
                                     record={record}

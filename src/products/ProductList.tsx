@@ -20,15 +20,17 @@ import {
     useGetResourceLabel,
 } from 'react-admin';
 
-import { CATEGORY_ID } from '../dataProvider';
+import { CATEGORY_ID, onRealData } from '../dataProvider';
 import ImageList from './GridList';
 import Aside from './Aside';
+
+const REFERENCE = onRealData('name', 'reference');
 
 const ProductList = () => {
     const getResourceLabel = useGetResourceLabel();
     const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('md'));
     return (
-        <ListBase perPage={24} sort={{ field: 'reference', order: 'ASC' }}>
+        <ListBase perPage={24} sort={{ field: REFERENCE, order: 'ASC' }}>
             <Title defaultTitle={getResourceLabel('products', 2)} />
             <FilterContext.Provider value={productFilters}>
                 <ListActions isSmall={isSmall} />
@@ -77,7 +79,7 @@ export const productFilters = [
 const ListActions = ({ isSmall }: any) => (
     <TopToolbar sx={{ minHeight: { sm: 56 } }}>
         {isSmall && <FilterButton />}
-        <SortButton fields={['reference', 'sales', 'stock']} />
+        <SortButton fields={[REFERENCE]} />
         <CreateButton />
         <ExportButton />
     </TopToolbar>
