@@ -15,6 +15,7 @@ import products from './products';
 import invoices from './invoices';
 import categories from './categories';
 import reviews from './reviews';
+import vendors from './vendors';
 import dataProviderFactory from './dataProvider';
 import Configuration from './configuration/Configuration';
 import Segments from './segments/Segments';
@@ -57,6 +58,7 @@ const App = () => {
             <Resource name="products" {...products} />
             <Resource name="categories" {...categories} />
             <Resource name="reviews" {...reviews} />
+            <Resource name="vendors" {...vendors} />
         </Admin>
     );
 };

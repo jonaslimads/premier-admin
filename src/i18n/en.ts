@@ -212,6 +212,20 @@ const customEnglishMessages: TranslationMessages = {
                 reviewer: 'Reviewer',
             },
         },
+        vendors: {
+            name: 'Vendor |||| Vendors',
+            fields: {
+            },
+            filters: {
+            },
+            fieldGroups: {
+            },
+            page: {
+                delete: 'Delete Vendor',
+            },
+            errors: {
+            },
+        },
     },
 };
 

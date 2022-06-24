@@ -13,10 +13,9 @@ const AttachmentList = () => {
 
     const name = record.name;
     const attachments = record.attachments;
-    const cols = useColsForWidth();
 
     return (
-        <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
+        <ImageList rowHeight={180} cols={4} sx={{ m: 0 }}>
             {attachments.map((attachment: string, index: number) => (
                 <ImageListItem key={index}>
                     <img src={attachment} alt={name} style={{ objectFit: 'contain' }} />

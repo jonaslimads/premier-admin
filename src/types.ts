@@ -2,6 +2,10 @@ import { RaRecord, Identifier } from 'react-admin';
 
 export type ThemeName = 'light' | 'dark';
 
+export interface Vendor extends RaRecord {
+    name: string;
+}
+
 export interface Category extends RaRecord {
     name: string;
 }
@@ -51,7 +55,7 @@ export interface BasketItem {
     quantity: number;
 }
 
-export interface Invoice extends RaRecord {}
+export interface Invoice extends RaRecord { }
 
 export type ReviewStatus = 'accepted' | 'pending' | 'rejected';
 

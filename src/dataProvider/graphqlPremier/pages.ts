@@ -1,30 +1,30 @@
-export const CATEGORIES = 'categories';
-
 import gql from 'graphql-tag';
 
 import { GraphQlResource } from './graphQlResource';
 import { mapGetOneResult, mapGetListResult } from './mappers';
 
-export class CategoriesGraphQl extends GraphQlResource {
+export const PAGES = 'pages';
+
+export class PagesGraphQl extends GraphQlResource {
     constructor() {
-        super(CATEGORIES)
+        super(PAGES)
     }
 
     public getList(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment GetListCategoryFields on PlatformViewCategory {
+                fragment GetListPageFields on PlatformViewPage {
                     id
                     name
                     slug
                 }
-                query GetListCategories($filter: JSONObject, $sort: [OrderBy], $after: String, $before: String, $first: Int, $last: Int) {
-                    data: categories(filter: $filter, sort: $sort, after: $after, before: $before, first: $first, last: $last) {
+                query GetListPages($filter: JSONObject, $sort: [OrderBy], $after: String, $before: String, $first: Int, $last: Int) {
+                    data: pages(filter: $filter, sort: $sort, after: $after, before: $before, first: $first, last: $last) {
                         edges {
                             node {
-                                ...GetListCategoryFields
+                                ...GetListPageFields
                                 children {
-                                    ...GetListCategoryFields
+                                    ...GetListPageFields
                                 }
                             }
                         }
@@ -44,16 +44,16 @@ export class CategoriesGraphQl extends GraphQlResource {
     public getOne(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment GetOneCategoryFields on PlatformViewCategory {
+                fragment GetOnePageFields on PlatformViewPage {
                     id
                     name
                     slug
                 }
-                query GetOneCategory($id: String!, $filter: JSONObject) {
+                query GetOnePage($id: String!, $filter: JSONObject) {
                     data: category(id: $id, filter: $filter) {
-                        ...GetOneCategoryFields
+                        ...GetOnePageFields
                         children {
-                            ...GetOneCategoryFields
+                            ...GetOnePageFields
                         }
                     }
                 }

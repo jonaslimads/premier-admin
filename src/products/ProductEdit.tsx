@@ -20,8 +20,7 @@ import { RichTextInput } from 'ra-input-rich-text';
 import { ProductEditDetails } from './ProductEditDetails';
 import CustomerReferenceField from '../visitors/CustomerReferenceField';
 import StarRatingField from '../reviews/StarRatingField';
-import Poster from './Poster';
-import AttachmentList from './Attachment';
+import AttachmentList from './AttachmentList';
 import { Product } from '../types';
 import { PRODUCT_ID } from '../dataProvider';
 
@@ -35,7 +34,6 @@ const ProductEdit = () => (
         <TabbedForm>
             <FormTab
                 label="resources.products.tabs.details"
-                // path="details"
                 sx={{ maxWidth: '40em' }}
             >
                 <ProductEditDetails />

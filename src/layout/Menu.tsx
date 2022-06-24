@@ -11,13 +11,14 @@ import {
     useSidebarState,
 } from 'react-admin';
 
-import visitors from '../visitors';
-import orders from '../orders';
-import invoices from '../invoices';
-import products from '../products';
 import categories from '../categories';
+import invoices from '../invoices';
+import orders from '../orders';
+import products from '../products';
 import reviews from '../reviews';
 import SubMenu from './SubMenu';
+import vendors from '../vendors';
+import visitors from '../visitors';
 
 type MenuName = 'menuCatalog' | 'menuSales' | 'menuCustomers';
 
@@ -81,13 +82,22 @@ const Menu = ({ dense = false }: MenuProps) => {
                 icon={<products.icon />}
                 dense={dense}
             >
-                <MenuItemLink
+                {/* <MenuItemLink
                     to="/products"
                     state={{ _scrollToTop: true }}
                     primaryText={translate(`resources.products.name`, {
                         smart_count: 2,
                     })}
                     leftIcon={<products.icon />}
+                    dense={dense}
+                /> */}
+                <MenuItemLink
+                    to="/vendors"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.vendors.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<vendors.icon />}
                     dense={dense}
                 />
                 <MenuItemLink

@@ -42,7 +42,6 @@ const LoadingGridList = () => {
 
 const LoadedGridList = () => {
     const { data } = useListContext();
-    const cols = useColsForWidth();
     const createPath = useCreatePath();
 
     if (!data) {
@@ -50,7 +49,7 @@ const LoadedGridList = () => {
     }
 
     return (
-        <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
+        <ImageList rowHeight={180} cols={4} sx={{ m: 0 }}>
             {data.map(record => (
                 <ImageListItem
                     component={Link}
@@ -62,7 +61,7 @@ const LoadedGridList = () => {
                     })}
                 >
                     {record.attachments[0] &&
-                        <img src={record.attachments[0]} alt={record.name} />
+                        <img src={record.attachments[0]} alt={record.name} style={{ objectFit: 'contain' }} />
                     }
                     <ImageListItemBar
                         title={record.name}

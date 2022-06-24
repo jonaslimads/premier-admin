@@ -13,14 +13,18 @@ import {
 import { HttpLink, ApolloClient, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
 
 import { CATEGORIES, CategoriesGraphQl } from './categories';
+import { PAGES, PagesGraphQl } from './pages';
 import { PRODUCTS, ProductsGraphQl } from './products';
 import { REVIEWS, ReviewsGraphQl } from './reviews';
 import { transformParams } from './mappers';
+import { VENDORS, VendorsGraphQl } from './vendors';
 
 
 const categoriesGraphQl = new CategoriesGraphQl();
+const pagesGraphQl = new PagesGraphQl();
 const productsGraphQl = new ProductsGraphQl();
 const reviewsGraphQl = new ReviewsGraphQl();
+const vendorsGraphQl = new VendorsGraphQl();
 
 export default async () => {
     const client = new ApolloClient({
@@ -47,8 +51,10 @@ export default async () => {
     const dataProvider = dataProviderFactory(client);
 
     categoriesGraphQl.setClient(client);
+    pagesGraphQl.setClient(client);
     productsGraphQl.setClient(client);
     reviewsGraphQl.setClient(client);
+    vendorsGraphQl.setClient(client);
 
     return new Proxy<DataProvider>(dataProvider, {
         get: (target, name) => {
@@ -70,6 +76,8 @@ const getFunc = (source: string, resource: string, params: any): Promise<any> =>
         return productsGraphQl.getList(params);
     } else if (resource === REVIEWS) {
         return reviewsGraphQl.getList(params);
+    } else if (resource === VENDORS) {
+        return vendorsGraphQl.getList(params);
     }
     // console.log("--------", source, resource, resource, params);
     return Promise.reject({ data: [], total: 0, resource, source })
