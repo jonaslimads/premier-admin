@@ -28,14 +28,19 @@ import {
 } from 'react-admin';
 import rowStyle from '../reviews/rowStyle';
 import { CATEGORY_ID, onRealData } from '../dataProvider';
-import VendorLinkField from './VendorLinkField';
+import StoreLinkField from './StoreLinkField';
+import SellerNameField from './SellerNameField';
 
-export interface VendorRowProps {
+export interface StoreRowProps {
     selectedRow?: Identifier;
 }
 
 
-const VendorListRow = ({ selectedRow }: VendorRowProps) => (
+const storeFilters = [
+    <SearchInput source="q" alwaysOn />,
+];
+
+const StoreListRow = ({ selectedRow }: StoreRowProps) => (
     <Datagrid
         rowClick="edit"
         rowStyle={rowStyle(selectedRow)}
@@ -54,7 +59,9 @@ const VendorListRow = ({ selectedRow }: VendorRowProps) => (
             },
         }}
     >
-        <VendorLinkField />
+        <StoreLinkField />
+        <SellerNameField label="resources.stores.sellers.fields.name" />
+        <TextField source="seller.attributes['email']" label="Email" />
         {/* <DateField source="date" />
         <CustomerReferenceField link={false} />
         <ProductReferenceField link={false} />
@@ -63,7 +70,7 @@ const VendorListRow = ({ selectedRow }: VendorRowProps) => (
     </Datagrid>
 );
 
-const VendorList = () => {
+const StoreList = () => {
     const isXSmall = useMediaQuery<Theme>(theme =>
         theme.breakpoints.down('sm')
     );
@@ -74,7 +81,7 @@ const VendorList = () => {
     //     navigate('/reviews');
     // }, [navigate]);
 
-    const match = matchPath('/vendors/:id', location.pathname);
+    const match = matchPath('/stores/:id', location.pathname);
 
     return (
         <Box display="flex">
@@ -87,11 +94,11 @@ const VendorList = () => {
                         }),
                     marginRight: !!match ? '400px' : 0,
                 }}
-                // filters={reviewFilters}
+                filters={storeFilters}
                 perPage={25}
                 sort={{ field: 'date', order: 'DESC' }}
             >
-                <VendorListRow
+                <StoreListRow
                     selectedRow={
                         !!match
                             ? parseInt((match as any).params.id, 10)
@@ -103,4 +110,4 @@ const VendorList = () => {
     );
 };
 
-export default VendorList;
+export default StoreList;

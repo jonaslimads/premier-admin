@@ -159,9 +159,9 @@ const customEnglishMessages: TranslationMessages = {
                 average_stock: '10 - 49 items',
                 enough_stock: '50 items & more',
                 sales: 'Sales',
-                best_sellers: 'Best sellers',
-                average_sellers: 'Average',
-                low_sellers: 'Low',
+                best_stores: 'Best stores',
+                average_stores: 'Average',
+                low_stores: 'Low',
                 never_sold: 'Never sold',
             },
         },
@@ -212,8 +212,8 @@ const customEnglishMessages: TranslationMessages = {
                 reviewer: 'Reviewer',
             },
         },
-        vendors: {
-            name: 'Vendor |||| Vendors',
+        stores: {
+            name: 'Store |||| Stores',
             fields: {
             },
             filters: {
@@ -221,10 +221,15 @@ const customEnglishMessages: TranslationMessages = {
             fieldGroups: {
             },
             page: {
-                delete: 'Delete Vendor',
+                delete: 'Delete Store',
             },
             errors: {
             },
+            sellers: {
+                fields: {
+                    name: 'Seller Name'
+                }
+            }
         },
     },
 };

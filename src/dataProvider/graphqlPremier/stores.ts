@@ -3,26 +3,27 @@ import gql from 'graphql-tag';
 import { GraphQlResource } from './graphQlResource';
 import { mapGetOneResult, mapGetListResult } from './mappers';
 
-export const VENDORS = 'vendors';
+export const STORES = 'stores';
 
-export class VendorsGraphQl extends GraphQlResource {
+export class StoresGraphQl extends GraphQlResource {
     constructor() {
-        super(VENDORS)
+        super(STORES)
     }
 
     public getList(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment GetListVendorFields on VendorProductsView {
-                    id,
-                    name,
-                    attributes,
-                }
-                query GetListVendors($filter: JSONObject, $sort: [OrderBy], $after: String, $before: String, $first: Int, $last: Int) {
-                    data: vendors(filter: $filter, sort: $sort, after: $after, before: $before, first: $first, last: $last) {
+                query GetListStores($filter: JSONObject, $sort: [OrderBy], $after: String, $before: String, $first: Int, $last: Int) {
+                    data: stores(filter: $filter, sort: $sort, after: $after, before: $before, first: $first, last: $last) {
                         edges {
                             node {
-                                ...GetListVendorFields
+                                id,
+                                name,
+                                attributes,
+                                seller {
+                                    name
+                                    attributes
+                                }
                             }
                         }
                         pageInfo {
@@ -41,14 +42,14 @@ export class VendorsGraphQl extends GraphQlResource {
     public getOne(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment GetOneVendorFields on PlatformViewVendor {
+                fragment GetOneStoreFields on PlatformViewStore {
                     id
                     name
                     attributes
                 }
-                query GetOneVendor($id: String!, $filter: JSONObject) {
-                    data: vendor(id: $id, filter: $filter) {
-                        ...GetOneVendorFields
+                query GetOneStore($id: String!, $filter: JSONObject) {
+                    data: store(id: $id, filter: $filter) {
+                        ...GetOneStoreFields
                     }
                 }
             `,

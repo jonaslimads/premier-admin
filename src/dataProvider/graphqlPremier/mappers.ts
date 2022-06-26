@@ -10,7 +10,7 @@ export const transformParams = (name: string, params: any): any => {
     const newParams: { [key: string]: string | number | any } = { filter: { ...filter } };
 
     // temp
-    newParams.filter['vendorId'] = '332807312191';
+    newParams.filter['storeId'] = '332807312191';
 
     const pagination = params.pagination;
     if (pagination && pagination.page && pagination.perPage && pagination.page > 0 && pagination.perPage > 0) {

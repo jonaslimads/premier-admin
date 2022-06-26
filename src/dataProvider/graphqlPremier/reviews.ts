@@ -36,7 +36,7 @@ export class ReviewsGraphQl extends GraphQlResource {
     public getOne(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment CategoryFields on VendorProductsViewCategory {
+                fragment CategoryFields on StoreProductsViewCategory {
                     id
                     name
                     slug

@@ -38,7 +38,7 @@ const Aside = () => {
                     icon={<AttachMoneyIcon />}
                 >
                     <FilterListItem
-                        label="resources.products.filters.best_sellers"
+                        label="resources.products.filters.best_stores"
                         value={{
                             sales_lte: undefined,
                             sales_gt: 25,
@@ -46,7 +46,7 @@ const Aside = () => {
                         }}
                     />
                     <FilterListItem
-                        label="resources.products.filters.average_sellers"
+                        label="resources.products.filters.average_stores"
                         value={{
                             sales_lte: 25,
                             sales_gt: 10,
@@ -54,7 +54,7 @@ const Aside = () => {
                         }}
                     />
                     <FilterListItem
-                        label="resources.products.filters.low_sellers"
+                        label="resources.products.filters.low_stores"
                         value={{
                             sales_lte: 10,
                             sales_gt: 0,

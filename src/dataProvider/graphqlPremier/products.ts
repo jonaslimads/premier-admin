@@ -57,7 +57,7 @@ export class ProductsGraphQl extends GraphQlResource {
                         Category: category {
                             id
                         }
-                        vendor {
+                        store {
                             id
                         }
                         Reviews: reviews {
@@ -122,14 +122,14 @@ export class ProductsGraphQl extends GraphQlResource {
         if (data.categoryId !== previousData.categoryId) {
             if (previousData.categoryId !== '') {
                 variables.push('$categoryId: String!');
-                variables.push('$vendorId: String!');
+                variables.push('$storeId: String!');
                 mutationData['categoryId'] = data.categoryId;
-                mutationData['vendorId'] = data.vendor.id;
+                mutationData['storeId'] = data.store.id;
                 updateCategoryId = `
                     categorizeProduct(
                         command: {
                             id: $id,
-                            vendorId: $vendorId,
+                            storeId: $storeId,
                             categoryId: $categoryId,
                         }
                     )
