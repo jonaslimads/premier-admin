@@ -17,12 +17,25 @@ export class StoresGraphQl extends GraphQlResource {
                     data: stores(filter: $filter, sort: $sort, after: $after, before: $before, first: $first, last: $last) {
                         edges {
                             node {
-                                id,
-                                name,
-                                attributes,
+                                id
+                                name
+                                attributes
+                                isPublished
                                 seller {
                                     name
                                     attributes
+                                }
+                                plan {
+                                    name
+                                    attributes
+                                    subscription {
+                                        kind
+                                        price {
+                                            currency
+                                            amount
+                                        }
+                                        expiresOn
+                                    }
                                 }
                             }
                         }

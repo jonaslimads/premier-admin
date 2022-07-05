@@ -34,9 +34,11 @@ const customEnglishMessages: TranslationMessages = {
             },
         },
         menu: {
-            sales: 'Sales',
             catalog: 'Catalog',
             customers: 'Customers',
+            orders: 'Orders',
+            sales: 'Sales',
+            stores: 'Stores',
         },
     },
     resources: {
@@ -215,10 +217,15 @@ const customEnglishMessages: TranslationMessages = {
         stores: {
             name: 'Store |||| Stores',
             fields: {
+                isPublished: 'Is Published?'
             },
             filters: {
             },
             fieldGroups: {
+                seller: 'Seller',
+                store: 'Store',
+                name: 'Name',
+                email: 'Email'
             },
             page: {
                 delete: 'Delete Store',
@@ -231,6 +238,15 @@ const customEnglishMessages: TranslationMessages = {
                 }
             }
         },
+        plans: {
+            name: 'Plan |||| Plans',
+            fields: {
+                description: 'Description',
+                expiresIn: 'Expires In (Days)',
+                expiresOn: 'Expires On',
+                name: 'Plan',
+            }
+        }
     },
 };
 

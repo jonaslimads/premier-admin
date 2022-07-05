@@ -14,14 +14,16 @@ import { HttpLink, ApolloClient, InMemoryCache, NormalizedCacheObject } from '@a
 
 import { CATEGORIES, CategoriesGraphQl } from './categories';
 import { PAGES, PagesGraphQl } from './pages';
+import { PLANS, PlansGraphQl } from './plans';
 import { PRODUCTS, ProductsGraphQl } from './products';
 import { REVIEWS, ReviewsGraphQl } from './reviews';
-import { transformParams } from './mappers';
 import { STORES, StoresGraphQl } from './stores';
+import { transformParams } from './mappers';
 
 
 const categoriesGraphQl = new CategoriesGraphQl();
 const pagesGraphQl = new PagesGraphQl();
+const plansGraphQl = new PlansGraphQl();
 const productsGraphQl = new ProductsGraphQl();
 const reviewsGraphQl = new ReviewsGraphQl();
 const storesGraphQl = new StoresGraphQl();
@@ -52,6 +54,7 @@ export default async () => {
 
     categoriesGraphQl.setClient(client);
     pagesGraphQl.setClient(client);
+    plansGraphQl.setClient(client);
     productsGraphQl.setClient(client);
     reviewsGraphQl.setClient(client);
     storesGraphQl.setClient(client);
@@ -72,6 +75,8 @@ export default async () => {
 const getFunc = (source: string, resource: string, params: any): Promise<any> => {
     if (resource === CATEGORIES) {
         return categoriesGraphQl.getList(params);
+    } else if (resource === PLANS) {
+        return plansGraphQl.getList(params);
     } else if (resource === PRODUCTS) {
         return productsGraphQl.getList(params);
     } else if (resource === REVIEWS) {

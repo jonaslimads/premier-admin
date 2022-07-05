@@ -14,17 +14,18 @@ import {
 import categories from '../categories';
 import invoices from '../invoices';
 import orders from '../orders';
+import plans from '../plans';
 import products from '../products';
 import reviews from '../reviews';
 import SubMenu from './SubMenu';
 import stores from '../stores';
 import visitors from '../visitors';
 
-type MenuName = 'menuCatalog' | 'menuSales' | 'menuCustomers';
+type MenuName = 'menuStores' | 'menuSales' | 'menuCustomers';
 
 const Menu = ({ dense = false }: MenuProps) => {
     const [state, setState] = useState({
-        menuCatalog: true,
+        menuStores: true,
         menuSales: true,
         menuCustomers: true,
     });
@@ -76,10 +77,10 @@ const Menu = ({ dense = false }: MenuProps) => {
                 />
             </SubMenu>
             <SubMenu
-                handleToggle={() => handleToggle('menuCatalog')}
-                isOpen={state.menuCatalog}
-                name="pos.menu.catalog"
-                icon={<products.icon />}
+                handleToggle={() => handleToggle('menuStores')}
+                isOpen={state.menuStores}
+                name="pos.menu.stores"
+                icon={<stores.icon />}
                 dense={dense}
             >
                 {/* <MenuItemLink
@@ -98,6 +99,15 @@ const Menu = ({ dense = false }: MenuProps) => {
                         smart_count: 2,
                     })}
                     leftIcon={<stores.icon />}
+                    dense={dense}
+                />
+                <MenuItemLink
+                    to="/plans"
+                    state={{ _scrollToTop: true }}
+                    primaryText={translate(`resources.plans.name`, {
+                        smart_count: 2,
+                    })}
+                    leftIcon={<plans.icon />}
                     dense={dense}
                 />
                 <MenuItemLink

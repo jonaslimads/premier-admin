@@ -10,10 +10,11 @@ import englishMessages from './i18n/en';
 import { lightTheme } from './layout/themes';
 
 import visitors from './visitors';
+import categories from './categories';
+import invoices from './invoices';
 import orders from './orders';
 import products from './products';
-import invoices from './invoices';
-import categories from './categories';
+import plans from './plans';
 import reviews from './reviews';
 import stores from './stores';
 import dataProviderFactory from './dataProvider';
@@ -54,9 +55,10 @@ const App = () => {
                 {...orders}
                 options={{ label: 'Orders' }}
             />
-            <Resource name="invoices" {...invoices} />
-            <Resource name="products" {...products} />
             <Resource name="categories" {...categories} />
+            <Resource name="invoices" {...invoices} />
+            <Resource name="plans" {...plans} />
+            <Resource name="products" {...products} />
             <Resource name="reviews" {...reviews} />
             <Resource name="stores" {...stores} />
         </Admin>
