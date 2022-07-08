@@ -27,6 +27,7 @@ import {
     useTranslate,
     useGetResourceLabel,
 } from 'react-admin';
+
 import rowStyle from '../reviews/rowStyle';
 import { CATEGORY_ID, onRealData } from '../dataProvider';
 import StoreLinkField from './StoreLinkField';
@@ -100,7 +101,7 @@ const StoreList = () => {
                 )}
             </FilterContext.Provider>
             <Box display="flex">
-                <Aside />
+                {/* <Aside /> */}
                 <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
                     <StoreListRow
                         selectedRow={

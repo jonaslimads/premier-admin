@@ -1,12 +1,31 @@
 import * as React from 'react';
 import { useTheme, useMediaQuery } from '@mui/material';
 import { Box, ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
-import { useCreatePath, NumberField, useListContext } from 'react-admin';
+import { useCreatePath, NumberField, useGetList, useListController, ListControllerResult } from 'react-admin';
 import { Link } from 'react-router-dom';
 
-const GridList = () => {
-    const { isLoading } = useListContext();
-    return isLoading ? <LoadingGridList /> : <LoadedGridList />;
+import { Product } from '../types';
+
+interface Props {
+    storeId?: string;
+}
+
+const listProducts = (props: Props): ListControllerResult<Product> => {
+    const { storeId } = props;
+    return useListController({
+        resource: 'products',
+        filter: { storeId },
+    })
+}
+
+const GridList = (props: Props) => {
+    const { storeId } = props;
+    if (!storeId) {
+        return null;
+    }
+
+    const { isLoading } = listProducts(props);
+    return isLoading ? <LoadingGridList storeId={storeId} /> : <LoadedGridList storeId={storeId} />;
 };
 
 export const useColsForWidth = () => {
@@ -26,8 +45,8 @@ export const useColsForWidth = () => {
 const times = (nbChildren: number, fn: (key: number) => any) =>
     Array.from({ length: nbChildren }, (_, key) => fn(key));
 
-const LoadingGridList = () => {
-    const { perPage } = useListContext();
+const LoadingGridList = (props: Props) => {
+    const { perPage } = listProducts(props);
     const cols = useColsForWidth();
     return (
         <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
@@ -40,12 +59,12 @@ const LoadingGridList = () => {
     );
 };
 
-const LoadedGridList = () => {
-    const { data } = useListContext();
+const LoadedGridList = (props: Props) => {
+    const { data } = listProducts(props);
     const createPath = useCreatePath();
 
     if (!data) {
-        return null
+        return null;
     }
 
     return (
@@ -60,7 +79,7 @@ const LoadedGridList = () => {
                         type: 'edit',
                     })}
                 >
-                    {record.attachments[0] &&
+                    {record.attachments && record.attachments[0] &&
                         <img src={record.attachments[0]} alt={record.name} style={{ objectFit: 'contain' }} />
                     }
                     <ImageListItemBar

@@ -26,7 +26,7 @@ export class ProductsGraphQl extends GraphQlResource {
                                 attachments
                                 attributes
                             }
-                            categoryId
+                            pageId
                         }
                         pageInfo {
                             hasNextPage

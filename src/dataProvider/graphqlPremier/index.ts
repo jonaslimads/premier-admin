@@ -107,6 +107,8 @@ const dataProviderFactory = (client: ApolloClient<NormalizedCacheObject>): DataP
             return categoriesGraphQl.getOne(params);
         } else if (resource === PRODUCTS) {
             return productsGraphQl.getOne(params);
+        } else if (resource === STORES) {
+            return storesGraphQl.getOne(params);
         }
         return Promise.reject({ data: null, source: GET_ONE, resource, params })
     },

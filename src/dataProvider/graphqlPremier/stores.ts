@@ -55,14 +55,11 @@ export class StoresGraphQl extends GraphQlResource {
     public getOne(params: any): Promise<any> {
         return this.runQuery(
             gql`
-                fragment GetOneStoreFields on PlatformViewStore {
-                    id
-                    name
-                    attributes
-                }
-                query GetOneStore($id: String!, $filter: JSONObject) {
-                    data: store(id: $id, filter: $filter) {
-                        ...GetOneStoreFields
+                query GetOneStore($id: String!) {
+                    data: store(id: $id) {
+                        id
+                        name
+                        attributes
                     }
                 }
             `,
