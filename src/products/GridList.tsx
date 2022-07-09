@@ -8,6 +8,7 @@ import { Product } from '../types';
 
 interface Props {
     storeId?: string;
+    products?: Product[];
 }
 
 const listProducts = (props: Props): ListControllerResult<Product> => {
@@ -19,13 +20,18 @@ const listProducts = (props: Props): ListControllerResult<Product> => {
 }
 
 const GridList = (props: Props) => {
-    const { storeId } = props;
+    const { storeId, products } = props;
+
+    if (products) {
+        return <LoadedGridList products={products} />
+    }
+
     if (!storeId) {
         return null;
     }
 
-    const { isLoading } = listProducts(props);
-    return isLoading ? <LoadingGridList storeId={storeId} /> : <LoadedGridList storeId={storeId} />;
+    const { isLoading, data } = listProducts(props);
+    return isLoading ? <LoadingGridList storeId={storeId} /> : <LoadedGridList products={data} />;
 };
 
 export const useColsForWidth = () => {
@@ -60,16 +66,14 @@ const LoadingGridList = (props: Props) => {
 };
 
 const LoadedGridList = (props: Props) => {
-    const { data } = listProducts(props);
-    const createPath = useCreatePath();
+    const { products = [] } = props;
 
-    if (!data) {
-        return null;
-    }
+    const createPath = useCreatePath();
+    const cols = useColsForWidth();
 
     return (
-        <ImageList rowHeight={180} cols={4} sx={{ m: 0 }}>
-            {data.map(record => (
+        <ImageList rowHeight={180} cols={cols} sx={{ m: 0 }}>
+            {products.map(record => (
                 <ImageListItem
                     component={Link}
                     key={record.id}

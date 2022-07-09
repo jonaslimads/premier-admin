@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Chip, useMediaQuery, Theme } from '@mui/material';
+import { Box, Chip, useMediaQuery, Theme, Typography, } from '@mui/material';
 import {
     CreateButton,
     ExportButton,
@@ -22,13 +22,14 @@ import {
 } from 'react-admin';
 
 import ImageList from '../products/GridList';
-import { Store } from '../types';
+import { Store, Page, Product } from '../types';
 
 const StoreProductList = () => {
     const record = useRecordContext<Store>();
-    if (!record) {
+    if (!record || !record.pages || !record.unpagedProducts) {
         return null;
     }
+    console.log('Record', record);
 
     const getResourceLabel = useGetResourceLabel();
     const isSmall = useMediaQuery<Theme>(theme => theme.breakpoints.down('md'));
@@ -44,15 +45,47 @@ const StoreProductList = () => {
                     </Box>
                 )}
             </FilterContext.Provider>
-            <Box display="flex">
-                <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'}>
-                    <ImageList storeId={record.id} />
-                    <Pagination rowsPerPageOptions={[12, 24, 48, 72]} />
-                </Box>
+            <Box width={isSmall ? 'auto' : 'calc(100% - 16em)'} sx={{ margin: '16px' }}>
+                {record.pages && record.pages.map(page => (
+                    <PageList page={page} level={0} key={page.name} />
+                ))}
+                {record.pages.length === 0 && <div>No product pages</div>}
+                {record.unpagedProducts && <ImageList products={record.unpagedProducts} />}
             </Box>
         </ListBase>
     );
 };
+
+interface PageProps {
+    key: string,
+    page: Page,
+    level: number;
+};
+
+const PageList = (props: PageProps) => {
+    const { page, level } = props;
+    const products = page.products;
+
+    let pageName = '>'.repeat(Math.max(0, level - 1)) + ' ' + page.name;
+
+    return (
+        <Box sx={{ marginLeft: level * 16 + 'px', marginTop: '16px' }}>
+            <Typography
+                variant={level === 0 ? 'h6' : 'subtitle1'}
+                display='flex'
+                flexWrap='nowrap'
+                alignItems='center'
+                component='div'
+            >
+                {pageName}
+            </Typography>
+            {products.length > 0 ? <ImageList products={products} /> : <div>No products</div>}
+            {page.children && page.children.map(child => (
+                <PageList page={child} level={level + 1} key={page.name + ' ' + child.name} />
+            ))}
+        </Box>
+    );
+}
 
 export const productFilters = [];
 
